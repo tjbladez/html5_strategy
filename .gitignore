@@ -1,6 +1,7 @@
 lib/impact/*
 lib/weltmeister/*
 *.DS_Store
+impact.rb
 
 lib-cov
 *.seed
