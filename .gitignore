@@ -1,20 +1,9 @@
 lib/impact/*
 lib/weltmeister/*
+tools/
+public/game.min.js
 *.DS_Store
 impact.rb
-
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-
-pids
-logs
-results
 
 npm-debug.log
 node_modules
