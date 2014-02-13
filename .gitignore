@@ -1,7 +1,6 @@
 lib/impact/*
 lib/weltmeister/*
 tools/
-public/media
 *.DS_Store
 impact.rb
 

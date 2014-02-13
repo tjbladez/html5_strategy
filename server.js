@@ -8,7 +8,7 @@
     app.set('view engine', 'jade');
     app.use(express.methodOverride());
     app.use(express.bodyParser());
-    app.use(express.static(process.env.PWD + '/public'));
+    app.use(express.static(process.env.PWD));
     return app.use(app.router);
   });
   app.get('/', function(req, res) {
