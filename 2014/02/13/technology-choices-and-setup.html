@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="HTML5 strategy : Strategy game experiment" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/html5_strategy/stylesheets/stylesheet.css">
+
+    <title>HTML5 strategy</title>
+  </head>
+
+  <body>
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/tjbladez/html5_strategy">View on GitHub</a>
+
+          <h1 id="project_title">HTML5 strategy</h1>
+          <h2 id="project_tagline">Strategy game experiment</h2>
+        </header>
+    </div>
+
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <div class="site">
+          <p>
+  <a href="/html5_strategy">Home</a>
+</p>
+<h2>Tech Choices & Setup</h2>
+<p class="meta">13 Feb 2014</p>
+
+<div class="post">
+<p>Game genre check. Available time check. Now what? Well, its time to make few technology choices.</p>
+
+<p>I have decided to stick with html5/javascript for the game because it is very easy to develop, host and play. It will have its own flaws but I am ready to deal with it.</p>
+
+<p>Next choice is what will we use to tweening, rendering, controls and most things that make a game. You roll it completely on your own, use some sort of what is now called a javascript game engine (albeit missing lots of properties of game engines) or just use different collection of libraries to help with each element separately.  Check out <a href="http://html5gameengine.com/">pretty good js engine/libraries comparison</a>. For the purpose of this project I will be rolling with the <a href="http://impactjs.com/">impact.js</a> since I already own a license for it, played with it so pretty aware of its benefits &amp; limitations and even contributed some code to it.
+I&#39;d rather minimize the fight with the game engine and focus on the game itself. There is still plenty of yak shaving.</p>
+
+<p>Alright, now with the development process I am going with that I&#39;ve done a number of times and am confortable with. Repository is on the github <a href="http://github.com/tjbladez/html5_strategy">http://github.com/tjbladez/html5_strategy</a>,
+project itself right now is hosted for free on heroku <a href="http://html5-strategy.herokuapp.com">http://html5-strategy.herokuapp.com</a>. Naming it is something I dont care at this point in time and can always do it later. Although you can play the game by just opening <code>index.html</code> in your browser at this point, I have also provided node based express server for the game. Code itself I will write in <a href="http://coffeescript.org/">coffeescript</a>.</p>
+
+<p>Setup was fairly straight forward. Had a minor problem with heroku static file serving. Deployments are ready both for <code>gh-pages</code> and game itself. Lets get something rendering.</p>
+
+</div>
+
+        </div>
+      </section>
+    </div>
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">HTML5 strategy maintained by <a href="https://github.com/tjbladez">tjbladez</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
