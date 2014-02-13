@@ -1,5 +1,7 @@
 lib/weltmeister/*
 impact.rb
+tools/
+node_modules/
 lib/impact/*
 *.DS_Store
 
