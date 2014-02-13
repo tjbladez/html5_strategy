@@ -2,6 +2,7 @@ lib/impact/*
 lib/weltmeister/*
 tools/
 *.DS_Store
+weltmeister.html
 impact.rb
 
 npm-debug.log
