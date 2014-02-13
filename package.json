@@ -1,13 +1,16 @@
 {
-    "name": "html5_strategy"
-  , "description": "Strategy game experiment using html5, impact js"
-  , "author": "Nickolay Schwarz <tjbladez@gmail.com>"
-  , "keywords": ["impactjs", "game", "multiplayer"]
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "3.x"
-    ,
-      "jade": "*"
+  "name": "html5_strategy",
+  "description": "Strategy game experiment using html5, impact js",
+  "author": "Nickolay Schwarz <tjbladez@gmail.com>",
+  "keywords": ["impactjs", "game", "multiplayer"],
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+    "jade": "*"
+  },
+  "engines": {
+    "node": "0.9.3",
+    "npm": "1.1.64"
   }
 }
