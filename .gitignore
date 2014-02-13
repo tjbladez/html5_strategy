@@ -1,7 +1,7 @@
 lib/impact/*
 lib/weltmeister/*
 tools/
-public/game.min.js
+public/
 *.DS_Store
 impact.rb
 
