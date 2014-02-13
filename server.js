@@ -1,8 +1,8 @@
-process.env.PWD = process.cwd()
 (function() {
   var express = require('express');
   var app  = express();
   var port = process.env.PORT || 2828;
+  process.env.PWD = process.cwd()
   app.configure(function() {
     app.set('views', process.env.PWD + '/views');
     app.set('view engine', 'jade');
