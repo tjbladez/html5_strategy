@@ -7,7 +7,7 @@ ig.module(
 .defines ->
   ig.Interface = ig.Entity.extend
     size: {x:768, y: 768}
-    animSheet: new ig.AnimationSheet('media/interface.png', 768, 768)
+    animSheet: new ig.AnimationSheet('public/media/interface.png', 768, 768)
     init: (x, y, opts) ->
       this.addAnim('idle', 1, [0])
       this.parent(x, y, opts)
