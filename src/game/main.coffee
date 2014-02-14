@@ -19,11 +19,16 @@ ig.module(
       @width  = width
       @height = height
       @tile   = 32
-      @loadLevel(LevelMain)
-
+      @loadRandomizedLevel(LevelMain)
       @rightBorder = ig.game.backgroundMaps[0].pxWidth - ig.system.width
       @bottomBorder = ig.game.backgroundMaps[0].pxHeight - ig.system.height
-      console.log("right border", @rightBorder, @width)
+    loadRandomizedLevel: (level)->
+      level.layer[0].data.forEach (row,r_i)->
+        row.forEach (column,c_i)->
+          idx = parseInt((column-1)/ 4)
+          newData = (idx*4)+[1,2,3,4].random()
+          level.layer[0].data[r_i][c_i] = newData
+      @loadLevel(level)
 
     update: ->
       if ig.input.state('left') && !@screen.x <=0
