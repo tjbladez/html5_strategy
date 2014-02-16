@@ -34,23 +34,29 @@ ig.module(
       @loadLevel(level)
 
     update: ->
-      if ig.input.state('left') && !@screen.x <=0
-        @screen.x -= 20
+      if ig.input.state('left')
+        if @screen.x > 0
+          @screen.x -= 20
+        else
+          @screen.x = -@tileSize
 
       if ig.input.state('right')
-        if @screen.x < @rBorder
+        if @screen.x < (@rBorder+@tileSize+266)
           @screen.x += 20
         else
-          @screen.x = @rBorder
+          @screen.x = @rBorder+266+@tileSize
 
       if ig.input.state('down')
-        if @screen.y < @bBorder
+        if @screen.y < (@bBorder+@tileSize)
           @screen.y += 20
         else
-          @screen.y = @bBorder
+          @screen.y = @bBorder+@tileSize
 
-      if ig.input.state('up') && !@screen.y <=0
-        @screen.y -= 20
+      if ig.input.state('up')
+        if @screen.y > 0
+          @screen.y -= 20
+        else
+          @screen.y = -@tileSize
 
       @minimap.update()
       @parent()

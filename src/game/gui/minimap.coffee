@@ -21,14 +21,18 @@ ig.module(
       return if !@tiles.loaded || @generated
 
       @preRenderMapToChunks()
-      $container = $('<div id="minimap"></div>')
-      $container.css({top:ig.game.tileSize, right: ig.game.rOffset})
-      $container.append(@preRenderedChunks[0][0])
-      $('body').append($container)
+      @$map = $('<div id="minimap"></div>')
+      @$map.css({top:ig.game.tileSize, right: ig.game.rOffset})
+      @$map.append(@preRenderedChunks[0][0])
+      $('body').append(@$map)
       @generated = true
 
     update: ()->
       if @generated
-        #do something
+        ctx = @$map.find('canvas')[0].getContext('2d')
+        ctx.lineWidth = "1"
+        ctx.rect(0,0,20,20)
+        ctx.stroke()
+        # ctx.fillRect(0, 0, 20, 20)
       else
         @generate()
