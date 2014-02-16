@@ -24,7 +24,6 @@ ig.module(
       @bBorder = @backgroundMaps[0].pxHeight - ig.system.height
       frame = new tj.Frame(@)
       @minimap = new tj.Minimap(LevelMain.layer[0].data);
-      @minimap.generate()
 
     loadRandomizedLevel: (level)->
       level.layer[0].data.forEach (row,r_i)->
@@ -56,6 +55,7 @@ ig.module(
       @parent()
 
     draw: ->
+      @minimap.generate() unless @minimap.generated
       @parent()
 
     getDimensions: ->
