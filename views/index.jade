@@ -3,6 +3,11 @@ html(lang="en")
   head
     title= title
     link(rel='stylesheet', type='text/css', href='public/stylesheets/styles.css')
+    if development
+      script(type='text/javascript', src='lib/impact/impact.js')
+      script(type='text/javascript', src='lib/game/main.js')
+    else
+      script(type='text/javascript', src='public/game.min.js')
     script(type='text/javascript')
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-48093245-1']);
@@ -13,10 +18,5 @@ html(lang="en")
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
-    if development
-      script(type='text/javascript', src='lib/impact/impact.js')
-      script(type='text/javascript', src='lib/game/main.js')
-    else
-      script(type='text/javascript', src='public/game.min.js')
   body
     canvas#canvas
