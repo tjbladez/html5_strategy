@@ -1,27 +1,27 @@
+window.tj = {}
 ig.module(
   'game.main'
 )
 .requires(
   'impact.game',
-  'impact.debug.debug',
-  'game.levels.main',
-  'game.entities.interface'
+  # 'impact.debug.debug',
+  'game.gui.frame',
+  'game.levels.main'
 )
 .defines ->
-  width  = parseInt(document.documentElement.clientWidth/32)*32
-  height = parseInt(document.documentElement.clientHeight/32)*32
-  Main = ig.Game.extend
+  width  = parseInt($(document).width()/32)*32
+  height = parseInt($(document).height()/32)*32
+  tj.Main = ig.Game.extend
     init: ->
       ig.input.bind(ig.KEY.UP_ARROW, 'up')
       ig.input.bind(ig.KEY.RIGHT_ARROW, 'right')
       ig.input.bind(ig.KEY.DOWN_ARROW, 'down')
       ig.input.bind(ig.KEY.LEFT_ARROW, 'left')
-      @width  = width
-      @height = height
-      @tile   = 32
+      @getDimensions()
       @loadRandomizedLevel(LevelMain)
-      @rightBorder = ig.game.backgroundMaps[0].pxWidth - ig.system.width
-      @bottomBorder = ig.game.backgroundMaps[0].pxHeight - ig.system.height
+      @rBorder = @backgroundMaps[0].pxWidth - ig.system.width
+      @bBorder = @backgroundMaps[0].pxHeight - ig.system.height
+      frame = new tj.Frame(@)
 
     loadRandomizedLevel: (level)->
       level.layer[0].data.forEach (row,r_i)->
@@ -45,6 +45,15 @@ ig.module(
         @screen.y -= 20
 
       @parent()
+
     draw: ->
       @parent()
-  ig.main('#canvas', Main, 60, width, height, 1)
+
+    getDimensions: ->
+      @width    = width
+      @height   = height
+      @tileSize = 32
+      @rOffset = $(document).width() % 32
+      @bOffset = $(document).height() % 32
+
+  ig.main('#canvas', tj.Main, 60, width, height, 1)
