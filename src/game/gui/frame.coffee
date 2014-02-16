@@ -8,7 +8,7 @@ ig.module(
   tj.Frame = ig.Class.extend
     init: (game)->
       #window border offset + buffer space + room for minimap
-      rOffset = game.rOffset + 20 + 128*1.5
+      rOffset = game.rOffset + 10 + 128*2
       @top = new tj.Overlay(className: 'top-frame', height: game.tileSize)
       @top.$el.css(top: 0, right: rOffset)
 

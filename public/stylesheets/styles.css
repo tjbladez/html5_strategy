@@ -16,3 +16,17 @@ html,body {
   background: #999;
   display: block;
 }
+.ig_debug .gui-overlay{
+  display: none;
+}
+#minimap {
+  width: 256px;
+  height: 256px;
+  background: #ccc;
+  padding: 5px;
+  position: fixed;
+  display: block;
+}
+#minimap canvas {
+  background: black;
+}

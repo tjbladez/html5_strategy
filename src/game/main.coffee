@@ -6,6 +6,7 @@ ig.module(
   'impact.game',
   # 'impact.debug.debug',
   'game.gui.frame',
+  'game.gui.minimap',
   'game.levels.main'
 )
 .defines ->
@@ -22,6 +23,8 @@ ig.module(
       @rBorder = @backgroundMaps[0].pxWidth - ig.system.width
       @bBorder = @backgroundMaps[0].pxHeight - ig.system.height
       frame = new tj.Frame(@)
+      @minimap = new tj.Minimap(LevelMain.layer[0].data);
+      @minimap.generate()
 
     loadRandomizedLevel: (level)->
       level.layer[0].data.forEach (row,r_i)->
@@ -36,10 +39,16 @@ ig.module(
         @screen.x -= 20
 
       if ig.input.state('right')
-        @screen.x += 20
+        if @screen.x < @rBorder
+          @screen.x += 20
+        else
+          @screen.x = @rBorder
 
       if ig.input.state('down')
-        @screen.y += 20
+        if @screen.y < @bBorder
+          @screen.y += 20
+        else
+          @screen.y = @bBorder
 
       if ig.input.state('up') && !@screen.y <=0
         @screen.y -= 20
