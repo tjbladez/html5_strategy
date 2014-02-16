@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="HTML5 strategy : Strategy game experiment" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/html5_strategy/stylesheets/stylesheet.css">
+
+    <title>HTML5 strategy</title>
+  </head>
+
+  <body>
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/tjbladez/html5_strategy">View on GitHub</a>
+
+          <h1 id="project_title">HTML5 strategy</h1>
+          <h2 id="project_tagline">Strategy game experiment</h2>
+        </header>
+    </div>
+
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <div class="site">
+          <p>
+  <a href="/html5_strategy">Home</a>
+</p>
+<h2>Choosing Tiles & Sprites</h2>
+<p class="meta">15 Feb 2014</p>
+
+<div class="post">
+<p>Tiles. Choices around your basic tiles are one of the most important decisions
+you will need to make. How big do you want your basic tile to be, how small? Is it going to be efficient for calculations or will kill your fps at the first tick? Rendering thousands of sprites each frame will cost you. For this game I wont deal with textures, filtering, blending or bitmaps. We will stay close to the old school - good ol&#39; sprites and sprite packages.</p>
+
+<p>Next question you have to ask yourself - are you going to make an isometric tile game or your standard top-down game. Choosing to not go with isometric
+will save you a lot of pain dealing with coordinate convertions and will drastically simplify your math calculations and algorithms most important of which will be collision detection.</p>
+
+<p>Alright, so going the simplest route and picking top-down game, great. Are we going to go with the hexagon-based tiles or square tiles? I would say that square tiles are simpler to grap, however they are not as enpowering as hexagon, especially if you want to use tiles in tactical battles. I wont and for the purpose of this project I am picking to go with the simple square-based tile system. If you think it is not powerful, thing about this - WarCraft II was build on this system. Here are <a href="http://www.spriters-resource.com/pc_computer/warcraft2/sheet/29501/">summer tiles from the warcraft II</a>.</p>
+
+<p>As to my choice I am going with 32x32 tiles (reasons are quite obvious, consider it a basic google exercise). Lets get on to it shall we.</p>
+
+</div>
+
+        </div>
+      </section>
+    </div>
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">HTML5 strategy maintained by <a href="https://github.com/tjbladez">tjbladez</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
