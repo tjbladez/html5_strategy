@@ -8,18 +8,27 @@ ig.module(
   tj.Minimap = ig.BackgroundMap.extend
     chunkSize: 256
     preRender: true
+    enabled: false
+    foreground: true
+    generated: false
+    scaleRatio: 16
 
-    init: (data)->
-      @parent(2, data, 'public/media/minimap_tileset.png');
+    init: (game)->
+      tileSize = game.tileSize / @scaleRatio
+      @parent(tileSize, game.backgroundMaps[0].data, 'public/media/minimap_tileset.png');
 
-    generate: (game)->
-      game ||= ig.game
-      $container = $('#minimap')
-      if $container.length
-        $container.html(@preRenderedChunks[0][0])
+    generate: ()->
+      return if !@tiles.loaded || @generated
+
+      @preRenderMapToChunks()
+      $container = $('<div id="minimap"></div>')
+      $container.css({top:ig.game.tileSize, right: ig.game.rOffset})
+      $container.append(@preRenderedChunks[0][0])
+      $('body').append($container)
+      @generated = true
+
+    update: ()->
+      if @generated
+        #do something
       else
-        @preRenderMapToChunks()
-        $container = $('<div id="minimap"></div>')
-        $container.css({top:game.tileSize, right: game.rOffset})
-        $container.append(@preRenderedChunks[0][0])
-        $('body').append($container)
+        @generate()
