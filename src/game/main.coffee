@@ -22,6 +22,7 @@ ig.module(
       @loadRandomizedLevel(LevelMain)
       @rightBorder = ig.game.backgroundMaps[0].pxWidth - ig.system.width
       @bottomBorder = ig.game.backgroundMaps[0].pxHeight - ig.system.height
+
     loadRandomizedLevel: (level)->
       level.layer[0].data.forEach (row,r_i)->
         row.forEach (column,c_i)->
