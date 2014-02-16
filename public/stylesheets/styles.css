@@ -13,6 +13,6 @@ html,body {
   filter:alpha(opacity=80); /* For IE8 and earlier */
 }
 .top-frame,.left-frame,.right-frame, .bottom-frame {
-  background: #ddd;
+  background: #999;
   display: block;
 }
