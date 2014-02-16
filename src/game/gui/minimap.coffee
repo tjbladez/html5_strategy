@@ -14,11 +14,11 @@ ig.module(
 
     generate: (game)->
       game ||= ig.game
-      @preRenderMapToChunks()
       $container = $('#minimap')
       if $container.length
         $container.html(@preRenderedChunks[0][0])
       else
+        @preRenderMapToChunks()
         $container = $('<div id="minimap"></div>')
         $container.css({top:game.tileSize, right: game.rOffset})
         $container.append(@preRenderedChunks[0][0])
