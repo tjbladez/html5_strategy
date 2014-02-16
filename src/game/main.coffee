@@ -20,8 +20,8 @@ ig.module(
       ig.input.bind(ig.KEY.LEFT_ARROW, 'left')
       @getDimensions()
       @loadRandomizedLevel(LevelMain)
-      @rBorder = @backgroundMaps[0].pxWidth - ig.system.width
-      @bBorder = @backgroundMaps[0].pxHeight - ig.system.height
+      @rBorder = @backgroundMaps[0].pxWidth - @play_w
+      @bBorder = @backgroundMaps[0].pxHeight - @play_h
       @frame   = new tj.Frame(@)
       @minimap = new tj.Minimap(@)
 
@@ -41,16 +41,16 @@ ig.module(
           @screen.x = -@tileSize
 
       if ig.input.state('right')
-        if @screen.x < (@rBorder+@tileSize+266)
+        if @screen.x < @rBorder
           @screen.x += 20
         else
-          @screen.x = @rBorder+266+@tileSize
+          @screen.x = @rBorder
 
       if ig.input.state('down')
-        if @screen.y < (@bBorder+@tileSize)
+        if @screen.y < @bBorder
           @screen.y += 20
         else
-          @screen.y = @bBorder+@tileSize
+          @screen.y = @bBorder
 
       if ig.input.state('up')
         if @screen.y > 0
@@ -70,5 +70,6 @@ ig.module(
       @tileSize = 32
       @rOffset = $(document).width() % 32
       @bOffset = $(document).height() % 32
-
+      @play_w  = @width - @tileSize - 256 - 10
+      @play_h  = @height - @tileSize
   ig.main('#canvas', tj.Main, 60, width, height, 1)

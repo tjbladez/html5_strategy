@@ -28,5 +28,11 @@ html,body {
   display: block;
 }
 #minimap canvas {
-  background: black;
+  position: absolute;
+  top: 5;
+  left: 5;
+  z-index: 1;
+}
+#minimap canvas.dynamic {
+  z-index: 2;
 }
