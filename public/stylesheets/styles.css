@@ -16,6 +16,12 @@ html,body {
   background: #999;
   display: block;
 }
+.right-menu-frame {
+  background: #666;
+  display: block;
+  opacity: 1;
+  z-index: 0;
+}
 .ig_debug .gui-overlay{
   display: none;
 }

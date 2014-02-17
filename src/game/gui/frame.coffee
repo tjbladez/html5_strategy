@@ -22,3 +22,6 @@ ig.module(
 
       @right = new tj.Overlay(className: 'right-frame', height: sHeight, width: game.tileSize)
       @right.$el.css(right: rOffset, top: game.tileSize, bottom:game.tileSize+game.bOffset)
+
+      @rightMenu = new tj.Overlay(className: 'right-menu-frame', width: 266)
+      @rightMenu.$el.css(top: 0, right: game.rOffset)
