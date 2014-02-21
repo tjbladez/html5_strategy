@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="HTML5 strategy : Strategy game experiment" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/html5_strategy/stylesheets/stylesheet.css">
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-48093245-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <title>HTML5 strategy</title>
+  </head>
+
+  <body>
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/tjbladez/html5_strategy">View on GitHub</a>
+
+          <h1 id="project_title">HTML5 strategy</h1>
+          <h2 id="project_tagline">Strategy game experiment</h2>
+        </header>
+    </div>
+
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <div class="site">
+          <p>
+  <a href="/html5_strategy">Home</a>
+</p>
+<h2>Minimap in Impact.js</h2>
+<p class="meta">20 Feb 2014</p>
+
+<div class="post">
+<p>Alright, we have gotten the a basic interface generated. Now it is time to add
+minimap in the top right corner.</p>
+
+<p>Everytime you work with minimap most important element to keep in your head that it doesn&#39;t have to be one to one mapping with map is going on the real map since minimap&#39;s purpose is different. Second you need to remember your limitations. There are many more points but I am just going to focus on these two. Here working with 2d and impact.js you wont be able to proceed the common way of placing a minimap camery at the higher depth (whatever scale you are looking for) or using pre rendered camera texture. To start with building useful minimap I established first two goals.</p>
+
+<ol>
+<li><p>Minimap has to be fast and accurate with regards to the static layers. By accurate I want to make sure that each element in my static layers of my 4096px by 4096px map is correctly reflected on the minimap. By fast I mean that I dont want to generate it every tick, 30 to 60 times per second. All static layers have to be generated once.</p></li>
+<li><p>It has to dynamically update the frame locator of the minimap as you scroll
+through the primary map.</p></li>
+</ol>
+
+<p>Here it is how my solution looks like now:</p>
+
+<div class="highlight"><pre><code class="coffeescript">  <span class="nv">tj.Minimap = </span><span class="nx">ig</span><span class="p">.</span><span class="nx">BackgroundMap</span><span class="p">.</span><span class="nx">extend</span>
+    <span class="nv">chunkSize: </span><span class="mi">256</span>
+    <span class="nv">preRender: </span><span class="kc">true</span>
+    <span class="nv">enabled: </span><span class="kc">false</span>
+    <span class="nv">foreground: </span><span class="kc">true</span>
+    <span class="nv">generated: </span><span class="kc">false</span>
+    <span class="nv">scaleRatio: </span><span class="mi">16</span>
+
+    <span class="nv">init: </span><span class="nf">(game)-&gt;</span>
+      <span class="nv">data = </span><span class="nx">game</span><span class="p">.</span><span class="nx">backgroundMaps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">data</span>
+      <span class="nv">tileSize  = </span><span class="nx">game</span><span class="p">.</span><span class="nx">tileSize</span> <span class="o">/</span> <span class="nx">@scaleRatio</span>
+      <span class="vi">@canvas_h = </span><span class="nx">tileSize</span> <span class="o">*</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span>
+      <span class="vi">@canvas_w = </span><span class="nx">tileSize</span> <span class="o">*</span> <span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">length</span>
+      <span class="nx">@parent</span><span class="p">(</span><span class="nx">tileSize</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="s">&#39;public/media/minimap_tileset.png&#39;</span><span class="p">);</span>
+
+    <span class="nv">generate: </span><span class="p">()</span><span class="nf">-&gt;</span>
+      <span class="k">return</span> <span class="k">if</span> <span class="o">!</span><span class="nx">@tiles</span><span class="p">.</span><span class="nx">loaded</span> <span class="o">||</span> <span class="nx">@generated</span>
+
+      <span class="nx">@preRenderMapToChunks</span><span class="p">()</span>
+
+      <span class="vi">@$map = </span><span class="nx">$</span><span class="p">(</span><span class="s">&#39;&lt;div id=&quot;minimap&quot;&gt;&lt;/div&gt;&#39;</span><span class="p">)</span>
+      <span class="nx">@$map</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span><span class="nx">top</span><span class="o">:</span><span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">tileSize</span><span class="p">,</span> <span class="nv">right: </span><span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">rOffset</span><span class="p">})</span>
+      <span class="nx">@$map</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">@preRenderedChunks</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+      <span class="vi">@$dynamic = </span><span class="nx">$</span><span class="p">(</span><span class="s">&#39;&lt;canvas class=&quot;dynamic&quot;&gt;&lt;/canvas&gt;&#39;</span><span class="p">)</span>
+      <span class="nx">@$dynamic</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s">&#39;width&#39;</span><span class="p">,</span><span class="nx">@canvas_w</span><span class="p">)</span>
+      <span class="nx">@$dynamic</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s">&#39;height&#39;</span><span class="p">,</span><span class="nx">@canvas_h</span><span class="p">)</span>
+      <span class="nx">@$map</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">@$dynamic</span><span class="p">)</span>
+
+      <span class="nx">$</span><span class="p">(</span><span class="s">&#39;body&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">@$map</span><span class="p">)</span>
+      <span class="vi">@generated = </span><span class="kc">true</span>
+
+    <span class="nv">update: </span><span class="p">()</span><span class="nf">-&gt;</span>
+      <span class="k">if</span> <span class="nx">@generated</span>
+        <span class="nv">ctx = </span><span class="nx">@$dynamic</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getContext</span><span class="p">(</span><span class="s">&#39;2d&#39;</span><span class="p">)</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nx">clearRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">@canvas_w</span><span class="p">,</span> <span class="nx">@canvas_h</span><span class="p">)</span>
+        <span class="nv">h = </span><span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">play_h</span><span class="o">/</span><span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">tileSize</span><span class="o">*</span><span class="mi">2</span>
+        <span class="nv">w = </span><span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">play_w</span><span class="o">/</span><span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">tileSize</span><span class="o">*</span><span class="mi">2</span>
+        <span class="nv">x = </span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">screen</span><span class="p">.</span><span class="nx">x</span> <span class="o">/</span> <span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">tileSize</span> <span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+        <span class="nv">y = </span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">screen</span><span class="p">.</span><span class="nx">y</span> <span class="o">/</span> <span class="nx">ig</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">tileSize</span> <span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nx">strokeRect</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">w</span><span class="p">,</span><span class="nx">h</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="nx">@generate</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Lets inspect key points.</p>
+
+<ul>
+<li><p><code>scaleRatio</code> - I have decided to scale map by the factor of 16. This way 4096x4096 converts really nicely to 256x256 map. As a result I have to scale my 32x32 tiles to their 2x2 versions.</p></li>
+<li><p><code>BackgroundMap</code> - I am reusing some of the impactjs internal code that i didn&#39;t want to duplicate, in particular preRenderingMapToChunks as its exactly what i need here - small chunk of static canvas</p></li>
+<li><p>Two Canvases - One for static content generated once and one for dynamic content that could be updated (position of units, events and frame that follows as map scrolls). For the frame I am using navite strokeRect canvas function.</p></li>
+</ul>
+
+</div>
+
+        </div>
+      </section>
+    </div>
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">HTML5 strategy maintained by <a href="https://github.com/tjbladez">tjbladez</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
