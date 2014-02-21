@@ -2,6 +2,7 @@ lib/weltmeister/*
 impact.rb
 tools/
 node_modules/
+weltmeister.html
 lib/impact/*
 *.DS_Store
 
