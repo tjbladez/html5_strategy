@@ -91,28 +91,28 @@ ig.module(
         @screen.y = -@tileSize
 
     placeCastles: ()->
-      playerCell = {x:12,y:12}
-      neutralCells= [
-        {x:33,y:10},
-        {x:33,y:30},
-        {x:47,y:54},
-        {x:79,y:53},
-        {x:81,y:76},
+      @castles =
+        player:  [{x: 12, y: 12}]
+        enemy:   [{x: 114, y: 59}]
+        neutral: [{x:33,y:10},
+                  {x:33,y:30},
+                  {x:47,y:54},
+                  {x:79,y:53},
+                  {x:81,y:76},
+                  {x:46,y:77},
+                  {x:21,y:83},
+                  {x:29,y:117},
+                  {x:68,y:98},
+                  {x:115,y:117},
+                  {x:117,y:86},
+                  {x:61,y:7},
+                  {x:83,y:38},
+                  {x:114,y:19}]
 
-        {x:46,y:77},
-        {x:21,y:83},
-        {x:29,y:117},
-        {x:68,y:98},
-        {x:115,y:117},
-        {x:117,y:86},
-        {x:61,y:7},
-        {x:83,y:38},
-        {x:114,y:19},
-      ]
-      enemyCell = {x:114,y:59}
-      @spawnEntity(tj.PlayerCastle, playerCell.x*@tileSize,playerCell.y*@tileSize-8)
-      _(neutralCells).each (i)=>
+      _(@castles.player).each (i)=>
+        @spawnEntity(tj.PlayerCastle, i.x*@tileSize,@castles.player[0].y*@tileSize-8)
+      _(@castles.neutral).each (i)=>
         @spawnEntity(tj.NeutralCastle, i.x*@tileSize, i.y*@tileSize-8)
-      @spawnEntity(tj.EnemyCastle, enemyCell.x*@tileSize,enemyCell.y*@tileSize-8)
-
+      _(@castles.enemy).each (i)=>
+        @spawnEntity(tj.EnemyCastle, i.x*@tileSize, i.y*@tileSize-8)
   ig.main('#canvas', tj.Main, 60, width, height, 1)
