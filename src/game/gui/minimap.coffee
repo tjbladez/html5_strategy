@@ -20,6 +20,7 @@ ig.module(
       @canvas_w = tileSize * data[0].length
       @parent(tileSize, data, 'public/media/minimap_tileset.png');
       @castleImgs = new ig.Image('public/media/minimap_castles.png');
+
     generate: ()->
       return if !@tiles.loaded || @generated
 
