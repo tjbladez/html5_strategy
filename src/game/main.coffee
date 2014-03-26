@@ -110,9 +110,10 @@ ig.module(
                   {x:114,y:19}]
 
       _(@castles.player).each (i)=>
-        @spawnEntity(tj.PlayerCastle, i.x*@tileSize,@castles.player[0].y*@tileSize-8)
+        @spawnEntity(tj.PlayerCastle, i.x*@tileSize, i.y*@tileSize-8)
       _(@castles.neutral).each (i)=>
         @spawnEntity(tj.NeutralCastle, i.x*@tileSize, i.y*@tileSize-8)
       _(@castles.enemy).each (i)=>
         @spawnEntity(tj.EnemyCastle, i.x*@tileSize, i.y*@tileSize-8)
+
   ig.main('#canvas', tj.Main, 60, width, height, 1)
