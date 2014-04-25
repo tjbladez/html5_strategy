@@ -32,6 +32,7 @@ html,body {
   padding: 5px;
   position: fixed;
   display: block;
+  cursor: pointer;
 }
 #minimap canvas {
   position: absolute;
