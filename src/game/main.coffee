@@ -16,6 +16,7 @@ ig.module(
   width  = parseInt($(document).width()/32)*32
   height = parseInt($(document).height()/32)*32
   tj.Main = ig.Game.extend
+    scrollSpeed: 20
     init: ->
       ig.input.bind(ig.KEY.UP_ARROW, 'up')
       ig.input.bind(ig.KEY.RIGHT_ARROW, 'right')
@@ -24,8 +25,8 @@ ig.module(
       ig.input.bind(ig.KEY.MOUSE1, 'click')
       @getDimensions()
       @loadRandomizedLevel(LevelMain)
-      @rBorder = @backgroundMaps[0].pxWidth - @play_w
-      @bBorder = @backgroundMaps[0].pxHeight - @play_h
+      @rBorder = @backgroundMaps[0].pxWidth - @playW
+      @bBorder = @backgroundMaps[0].pxHeight - @playH
       @frame   = new tj.Frame(@)
       @minimap = new tj.Minimap(@)
       @placeCastles()
@@ -63,32 +64,30 @@ ig.module(
       @tileSize = 32
       @rOffset = $(document).width() % 32
       @bOffset = $(document).height() % 32
-      @play_w  = @width - @tileSize - 256 - 10
-      @play_h  = @height - @tileSize
+      @playW  = @width - @tileSize - 256 - 10
+      @playH  = @height - @tileSize
 
     scrollLeft: ()->
-      if @screen.x > 0
-        @screen.x -= 20
-      else
-        @screen.x = -@tileSize
+      @scrollToX(@screen.x - @scrollSpeed)
 
     scrollRight: ()->
-      if @screen.x < @rBorder
-        @screen.x += 20
-      else
-        @screen.x = @rBorder
+      @scrollToX(@screen.x + @scrollSpeed)
 
     scrollDown: ()->
-      if @screen.y < @bBorder
-        @screen.y += 20
-      else
-        @screen.y = @bBorder
+      @scrollToY(@screen.y + @scrollSpeed)
 
     scrollUp: ()->
-      if @screen.y > 0
-        @screen.y -= 20
-      else
-        @screen.y = -@tileSize
+      @scrollToY(@screen.y - @scrollSpeed)
+
+    scrollToY: (y)->
+      y = -@tileSize if y <= 0
+      y = @bBorder if y >= @bBorder
+      @screen.y = y
+
+    scrollToX: (x)->
+      x = -@tileSize if x <= 0
+      x = @rBorder if x >= @rBorder
+      @screen.x = x
 
     placeCastles: ()->
       @castles =
